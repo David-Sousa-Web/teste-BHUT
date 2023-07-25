@@ -2,6 +2,7 @@ import { api } from "../../lib/api";
 import { Request, Response } from "express";
 import { AxiosError, isAxiosError } from "axios";
 import { createCarLog } from "./controllerLogs";
+import { newCarQueue } from "../../queue";
 
 export const getCars = async (req: Request, res: Response) => {
   const response = await api.get("/cars");
@@ -28,6 +29,8 @@ export const storeCars = async (req: Request, res: Response) => {
 
     // Chama a função para criar o registro de log, passando o ID do novo carro
     await createCarLog(newCar.data._id);
+
+    await newCarQueue.add("newCar", newCar.data);
   } catch (error) {
     if (isAxiosError(error)) {
       const axiosError = error as AxiosError;
