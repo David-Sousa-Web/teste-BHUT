@@ -27,7 +27,6 @@ export const storeCars = async (req: Request, res: Response) => {
 
     res.send(newCar.data);
 
-    // Chama a função para criar o registro de log, passando o ID do novo carro
     await createCarLog(newCar.data._id);
 
     await newCarQueue.add("newCar", newCar.data);

@@ -9,7 +9,7 @@ export const newCarQueue = new Queue("newCarQueue", {
 new Worker(
   "newCarQueue",
   async (job) => {
-    console.log("Dados do novo carro recebidos:", job.data);
+    console.log("Dados do novo carro recebidos", job.data);
     sendWebhook(job.data);
   },
   {
